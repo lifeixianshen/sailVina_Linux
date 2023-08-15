@@ -3,7 +3,7 @@ import os
 from Tools.read_scores import read_root_folder_scores
 from file_processor import get_best_scores, create_scores_file
 
-output_folder = "." + os.sep + "Output"
+output_folder = f".{os.sep}Output"
 output_txt_list = []
 
 for ligand in os.listdir(output_folder):
@@ -20,16 +20,13 @@ for ligand in os.listdir(output_folder):
 scores = ["Ligands\tProteins\tbest_ligand\tscores\n"]
 for output_txt in output_txt_list:
     with open(output_txt, "r") as f:
-        text = f.readline()
-        while text:
+        while text := f.readline():
             if text == "receptor_name\tligand_name\tscores\n":
                 text = f.readline()
                 continue
             # Output / aspirin1 / output.txt
             new_text = output_txt.split(os.sep)[-2] + "\t" + text
             scores.append(new_text)
-            text = f.readline()
-
 scores_file = output_folder + os.sep + "scores.txt"
 with open(scores_file, "w") as f:
     f.writelines(scores)

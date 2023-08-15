@@ -5,19 +5,10 @@ import os
 
 
 def check_cmd_para(cmd_para):
-    # 直接运行
-    if len(cmd_para) == 1:
+    if len(cmd_para) == 1 or len(cmd_para) != 2:
         return 0
-    # 参数个数不正确
-    elif len(cmd_para) != 2:
-        return 0
-    # 检查文件名
-    else:
-        proteins = cmd_para[1]
-        if check_dir(proteins):
-            return 1
-        else:
-            return 0
+    proteins = cmd_para[1]
+    return 1 if check_dir(proteins) else 0
 
 
 def check_dir(filename):
@@ -27,10 +18,7 @@ def check_dir(filename):
     :return: 如果是文件夹，如果存在返回1，不存在返回0。不是文件夹返回0。
     """
     if os.path.isdir(filename):
-        if os.path.exists(filename):
-            return 1
-        else:
-            return 0
+        return 1 if os.path.exists(filename) else 0
     else:
         return 0
 
@@ -42,10 +30,7 @@ def check_file(filename):
     :return: 是文件返回1，不是返回0。文件不存在返回0
     """
     if os.path.isfile(filename):
-        if os.path.exists(filename):
-            return 1
-        else:
-            return 0
+        return 1 if os.path.exists(filename) else 0
     else:
         return 0
 
@@ -58,7 +43,4 @@ def check_format(filename, target_format):
     :return: 是否是指定格式
     """
     file_format = os.path.splitext(filename)[-1]
-    if file_format != "." + target_format:
-        return 0
-    else:
-        return 1
+    return 0 if file_format != f".{target_format}" else 1

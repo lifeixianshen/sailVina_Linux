@@ -117,15 +117,7 @@ def __get_proteins(proteins_dir):
     :return: 所有pdbqt文件的文件名
     """
     proteins = os.listdir(proteins_dir)
-    receptors = []
-    for protein in proteins:
-        if protein.endswith(".pdbqt"):
-            receptors.append(protein)
-
-    # print("------------------------------------------------------------")
-    # print("发现受体pdbqt文件" + str(len(receptors)) + "个")
-    # print("开始移动文件")
-    return receptors
+    return [protein for protein in proteins if protein.endswith(".pdbqt")]
 
 
 def __get_pdb_box(pdb_file_path):
@@ -156,7 +148,7 @@ def __get_pdb_box(pdb_file_path):
                     atoms_y_list.append(float(line[38:46]))
                     atoms_z_list.append(float(line[46:54]))
 
-    if len(atoms_x_list) == 0:
+    if not atoms_x_list:
         # print("没有检测到原子")
         sys.exit()
 

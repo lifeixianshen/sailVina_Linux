@@ -13,15 +13,12 @@ def vina_dock(ligand, protein, config, output):
     :return: 返回1表示正常
     """
 
-    cmd = "vina --ligand %s --receptor %s --config %s --out %s" % \
-          (ligand, protein, config, output)
+    cmd = f"vina --ligand {ligand} --receptor {protein} --config {config} --out {output}"
 
     # print(cmd)
     return os.system(cmd)
 
 
-if __name__ == '__main__':
-    pass
     # 本地调试代码
     # vina_dock(r".\Ligands\aspirin.pdbqt", r".\Proteins\01\preped.pdbqt", r".\Proteins\01\config1.txt",
     #           r".\Output\01\01.pdbqt")

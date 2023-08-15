@@ -12,7 +12,7 @@ def pdbqt2dir(pdbqt_path):
     :param pdbqt_path: pdbqt文件路径
     """
     # 1.创建文件夹
-    pdbqt_dir = pdbqt_path[0:-6]
+    pdbqt_dir = pdbqt_path[:-6]
     if not os.path.exists(pdbqt_dir):
         os.mkdir(pdbqt_dir)
     # 2.移动文件
@@ -22,7 +22,7 @@ def pdbqt2dir(pdbqt_path):
 
 def read_para(para_name):
     with open("para.txt", "r", encoding='UTF-8') as f:
-        for line in f.readlines():
+        for line in f:
             if line.startswith(para_name):
                 return line.split("=")[1].strip()
 
@@ -40,15 +40,15 @@ def gen_config_file(output_name, x, y, z, size):
     num_modes = read_para("num_modes")
     energy_range = read_para("energy_range")
     with open(output_name, "w", encoding='UTF-8') as f:
-        f.writelines("center_x = " + str(x) + "\n")
-        f.writelines("center_y = " + str(y) + "\n")
-        f.writelines("center_z = " + str(z) + "\n")
-        f.writelines("size_x = " + str(size) + "\n")
-        f.writelines("size_y = " + str(size) + "\n")
-        f.writelines("size_z = " + str(size) + "\n")
-        f.writelines("exhaustiveness = " + exhaustiveness + "\n")
-        f.writelines("num_modes = " + num_modes + "\n")
-        f.writelines("energy_range = " + energy_range + "\n")
+        f.writelines(f"center_x = {str(x)}" + "\n")
+        f.writelines(f"center_y = {str(y)}" + "\n")
+        f.writelines(f"center_z = {str(z)}" + "\n")
+        f.writelines(f"size_x = {str(size)}" + "\n")
+        f.writelines(f"size_y = {str(size)}" + "\n")
+        f.writelines(f"size_z = {str(size)}" + "\n")
+        f.writelines(f"exhaustiveness = {exhaustiveness}" + "\n")
+        f.writelines(f"num_modes = {num_modes}" + "\n")
+        f.writelines(f"energy_range = {energy_range}" + "\n")
 
 
 def get_config_files(protein_path):
@@ -58,11 +58,11 @@ def get_config_files(protein_path):
     :return: 蛋白的config文件
     """
     files = os.listdir(protein_path)
-    config_files = []
-    for file in files:
-        if file.startswith("config"):
-            config_files.append(protein_path + os.sep + file)
-    return config_files
+    return [
+        protein_path + os.sep + file
+        for file in files
+        if file.startswith("config")
+    ]
 
 
 def mk_output_dir(output_path):

@@ -61,18 +61,17 @@ def read_scores(output_file_path):
     """
     scores = []
     with open(output_file_path, "r", encoding='UTF-8') as f:
-        for line in f.readlines():
-            if line.startswith("REMARK VINA RESULT"):
-                scores.append(line.split()[3])
-
+        scores.extend(
+            line.split()[3]
+            for line in f
+            if line.startswith("REMARK VINA RESULT")
+        )
     return scores
 
 
 if __name__ == '__main__':
     # 读取命令行输入
-    if len(sys.argv) == 1:
-        sys.exit()
-    elif len(sys.argv) != 3:
+    if len(sys.argv) == 1 or len(sys.argv) != 3:
         sys.exit()
     else:
         re_dict = read_root_folder_scores(sys.argv[1], mode=1)

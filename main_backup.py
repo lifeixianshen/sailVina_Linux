@@ -27,16 +27,16 @@ class Main:
         if not check_cmd_para(sys.argv):
             print(INFO)
             sys.exit()
-        self.ligands = "." + os.sep + "Ligands"
+        self.ligands = f".{os.sep}Ligands"
         self.proteins_dir = sys.argv[1]
-        pre_proteins_dir = "." + os.sep + "PreProteins"
-        self.output_path = "." + os.sep + "Output"
+        pre_proteins_dir = f".{os.sep}PreProteins"
+        self.output_path = f".{os.sep}Output"
 
         # 2.根据配体和受体建立文件夹。
         for ligand in os.listdir(self.ligands):
             if not ligand.endswith(".pdbqt"):
                 continue
-            ligand_path = "." + os.sep + "Ligands" + os.sep + ligand
+            ligand_path = f".{os.sep}Ligands{os.sep}{ligand}"
             ligand_folder = pre_proteins_dir + os.sep + ligand[:-6]
             # 在PreProteins中创建文件夹，以配体命名
             mk_output_dir(ligand_folder)
@@ -72,13 +72,10 @@ class Main:
                 output_dir = self.output_path + os.sep + ligand[:-6] + os.sep + receptor_dir[:-6]
                 mk_output_dir(output_dir)
 
-                output_count = 0
-                for config_file in config_files:
+                for output_count, config_file in enumerate(config_files):
                     output_file = output_dir + os.sep + str(output_count) + ".pdbqt"
                     # print("当前配置文件:" + config_file)
                     vina_dock(ligand_path, receptor_file, config_file, output_file)
-                    # print("------------------------------------------------------------")
-                    output_count += 1
 
 
 if __name__ == '__main__':

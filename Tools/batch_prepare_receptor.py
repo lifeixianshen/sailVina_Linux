@@ -39,23 +39,24 @@ def prepare_receptors(mgl_dir, receptors_path, output_dir):
         input_file = receptors_path + os.sep + receptors_name[i]
         output_file = output_dir + os.sep + receptors_name[i].split(".")[0] + ".pdbqt"
         print("--------------------开始准备受体--------------------")
-        print("当前输入文件" + input_file)
-        cmd = "%s %s -r %s -o %s -A -e" % (mgl_python_path, prepare_receptor4_path, input_file, output_file)
+        print(f"当前输入文件{input_file}")
+        cmd = f"{mgl_python_path} {prepare_receptor4_path} -r {input_file} -o {output_file} -A -e"
         # print(cmd)
         os.system(cmd)
         print("--------------------受体准备完成--------------------")
-        print("当前输出文件" + output_file)
+        print(f"当前输出文件{output_file}")
         i += 1
 
 
 def get_receptors(receptors_root_path):
     receptors = os.listdir(receptors_root_path)
-    receptors_name = []
-    for receptor_path in receptors:
-        if receptor_path.endswith(".pdb") or receptor_path.endswith(".mol2") or \
-                receptor_path.endswith(".pdbq"):
-            receptors_name.append(os.path.split(receptor_path)[-1])
-    return receptors_name
+    return [
+        os.path.split(receptor_path)[-1]
+        for receptor_path in receptors
+        if receptor_path.endswith(".pdb")
+        or receptor_path.endswith(".mol2")
+        or receptor_path.endswith(".pdbq")
+    ]
 
 
 if __name__ == '__main__':

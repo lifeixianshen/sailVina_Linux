@@ -27,7 +27,7 @@ def extract_model(input_path, output_path):
                 if not os.path.exists(sub_model_folders_path):
                     # D:\\test\\outputs\\12345(model)
                     sub_model_folders_path = root_name_path
-            print("当前提取：" + sub_model_folders_path)
+            print(f"当前提取：{sub_model_folders_path}")
             sub_model_folders = os.listdir(sub_model_folders_path)
             for sub_model_name in sub_model_folders:
                 # D:\\test\\outputs\\12345\\model\\01
